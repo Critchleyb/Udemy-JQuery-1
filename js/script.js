@@ -139,19 +139,128 @@ $(function() {
   // const text = $('input:text');
   // console.log(text.val()); //returns the value of the element
   
-  const galleryImg = $('.gallery').find('img').first();
-  const images = [
-    'images/laptop-mobile_small.jpg',
-    'images/laptop-on-table_small.jpg',
-    'images/people-office-group-team_small.jpg'
-  ];
+  // const galleryImg = $('.gallery').find('img').first();
+  // const images = [
+  //   'images/laptop-mobile_small.jpg',
+  //   'images/laptop-on-table_small.jpg',
+  //   'images/people-office-group-team_small.jpg'
+  // ];
 
-  let i = 0;
-  setInterval(() => {
-    i = (i + 1) % images.length; // 0,1,2,0,1,2
-    galleryImg.fadeOut(1000, function() {
-      $(this).attr("src", images[i]);
-      $(this).fadeIn(1000);
-    });
-  },4000);
+  // let i = 0;
+  // setInterval(() => {
+  //   i = (i + 1) % images.length; // 0,1,2,0,1,2
+  //   galleryImg.fadeOut(1000, function() {
+  //     $(this).attr("src", images[i]);
+  //     $(this).fadeIn(1000);
+  //   });
+  // },4000);
+
+  $('.gallery').hide();
+
+  // const redBox = $('.red-box');
+  // console.log(redBox.css('width')); //returns with the unit
+  // console.log(redBox.width()); //returns without the unit
+
+  // $('p').css('font-size', '2rem');
+
+  // const properties = $('p').css(['font-size', 'line-height', 'color']);
+  // console.log(properties);
+
+  // $('a').addClass('fancy-link');
+  // $('p').addClass('large emphasize'); //This adds two classes
+
+  // $('li li').addClass(function(index) {
+  //   $(this).addClass(`item-${index}`);
+  // });
+
+  // $('div').addClass(function (index,currentClass) {
+  //   if (currentClass === 'dummy') {
+  //     return 'red-box';
+  //   }
+  // });
+
+  // $('.red-box').removeClass('red-box');
+
+  /*------ELEMENT DATA-------*/
+  // DATA PROPERTIES INLINE HTML ALSO GET STORED HERE
+
+  // const gallery = $('.gallery');
+  // const images = [
+  //   'images/laptop-mobile_small.jpg',
+  //   'images/laptop-on-table_small.jpg',
+  //   'images/people-office-group-team_small.jpg'
+  // ];
+
+  // gallery.data('availableImages', images); // Can set key value pairs
+  // console.log(gallery.data('availableImages')); //use the key to get the data
+  // gallery.data('title', 'AwesomeGallery');
+  // console.log(gallery.data()); // Empty .data() returns all data
+
+  /*------ELEMENT CONTENT-------*/
+  // text(), html()
+
+// const firstPar = $('p:first');
+
+// console.log(firstPar.text());
+// console.log(firstPar.html());
+
+//   firstPar.html(`${firstPar.html()} This has been appended`);
+
+  /*------EVENT HANDLERS-------*/
+
+  // $('#button-click').click(event => {
+  //   console.log(event.target);
+  // });
+
+  $('.red-box').click(function() {
+    $(this).fadeTo(500, .5);
+  });
+
+  $('#button-hover').hover(function() {
+    console.log('Button Hovered');
+  });
+
+  // $('.green-box').hover(function () {
+  //   $(this).text('hovered');
+  // });
+
+
+  const blueBox = $('.blue-box');
+
+  // blueBox.mouseenter(function() {
+  //   $(this).stop().fadeTo(500,.7);
+  // });
+  // blueBox.mouseleave(function () {
+  //   $(this).stop().fadeTo(500,1);
+  // });
+
+  // blueBox.hover(
+  //   function () {
+  //   $(this).stop().fadeTo(500, .7);
+  // }, 
+  // function () {
+  //   $(this).stop().fadeTo(500, 1);
+  // });
+
+  // $('html').on("click keydown", function() { // Setting the same function for multiple event types
+  //   console.log(`mouse was clicked or key was pressed`);
+  // })
+
+  /*------EVENT DELEGATION-------*/
+
+  // $('#content').on('click','p',function() { // Use the .on() function to delegate. the second parameter is the target.
+  //   $(this).slideUp();
+  // });
+
+  /*------EVENT DATA-------*/
+
+  // $('#button-click').click({ // first argument in an event can be an object to set the event.data property.
+  //   user: 'Peter'
+  // },event => {
+  //   alert(`Hello ${event.data.user}`);
+  // });
+
+  $('html').keydown(event => { //.which is offered by Jquery to give a keycode that is cross browser and can be used to identify which key was pressed.
+    console.log(event.which);
+  });
 });
