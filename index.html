@@ -25,11 +25,18 @@
     <p>Add elements here as you like to try out jQuery. <span>This is your playground to test out anything that comes into your mind.</span></p>
     <p><strong>OR:</strong> Copy this project structure into a new directory first to create separate playgrounds for animations, manipulations, event handlers etc.</p>
 
+    <pre><code id="code"></code></pre>
+
+    <div id="flickr"></div>
+    
+    <div id="pokemon-details"></div>
+    <div id="pokemon"></div>
+
     <div class="gallery">
       <img src="images/laptop-mobile_small.jpg" alt="laptop">
     </div>
 
-    <ul id="list">
+    <!-- <ul id="list">
       <li>
         Main item 1
         <ul>
@@ -58,12 +65,23 @@
             <li>Sub item 2</li>
         </ul>
       </li>
-    </ul> 
-    <form action="">
-      <input type="text" placeholder="text" value="test"><br>
-      <input type="email" placeholder="email"><br>
-      <input type="checkbox" name="cb"><label for="cb">Check Me</label><br>
-      <textarea name="" id="" cols="30" rows="10" placeholder="comments"></textarea><br>
+    </ul>  -->
+    <form id="form" action="">
+
+      <input id="name" type="text" placeholder="Enter your name">
+      <span id="name-feedback"></span><br>
+
+      <input id="password" type="password" placeholder="Enter a password">
+      <span id="password-feedback"></span><br>
+
+      <input type="range" id="amount" min="1" max="9" value="5"><br>
+      
+      <textarea name="" id="message" cols="30" rows="10" placeholder="comments"></textarea>
+      <span id="message-feedback"></span><br><br>
+
+      <input id="checkbox" type="checkbox" name="cb"><label for="cb">Check Me</label>
+      <span id="checkbox-feedback"></span><br><br>
+
       <input type="submit" value="submit">
     </form>
   </div>

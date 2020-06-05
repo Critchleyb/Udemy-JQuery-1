@@ -260,7 +260,156 @@ $(function() {
   //   alert(`Hello ${event.data.user}`);
   // });
 
-  $('html').keydown(event => { //.which is offered by Jquery to give a keycode that is cross browser and can be used to identify which key was pressed.
-    console.log(event.which);
+  // $('html').keydown(event => { //.which is offered by Jquery to give a keycode that is cross browser and can be used to identify which key was pressed.
+  //   console.log(event.which);
+  // });
+
+  /*------FORMS-------*/
+
+  // const inputFields = $('input:text, input[type="email"], textarea');
+  // inputFields.focus(function() { // This is when box is focused
+  //   $(this).css('box-shadow', '0 0 4px #666');
+  // });
+  // inputFields.blur(function () { // This is when box is focused
+  //   $(this).css('box-shadow', 'none');
+  // });
+  // $('input:text').blur(function () { // This is when the box is no longer focused
+  //   if($(this).val().length <img 3) {
+  //     $(this).css('border', '1px solid rgb(200,0,0)');
+  //   } else {
+  //     $(this).css('border', '1px solid rgb(0,200,0)');
+  //   }
+  // });
+
+  // $('input:checkbox').change(function() {
+  //   const isChecked = $(this).is(':checked');
+  //   if(isChecked) {
+  //     $(this).add('label[for="cb"]').css('box-shadow', '0 0 4px #181');
+  //   } else {
+  //     $(this).add('label[for="cb"]').css('box-shadow', '0 0 4px #811');
+  //   }
+  // });
+
+  
+  // $('#form').submit(function(event) {
+  //   const textArea = $("#message");
+  //   if (textArea.val().trim() == '') {
+  //     textArea.css('box-shadow','0 0 4px #811');
+  //     event.preventDefault();
+  //   }
+  // });
+
+  const form = $('#form');
+  enableFastFeedback(form);
+  form.submit(function (event) {
+    const name = $('#name').val();
+    const password = $('#password').val();
+    const message = $('#message').val();
+    const checked = $('#checkbox').is(':checked');
+
+    Validate(name,'name',event);
+    Validate(password,'password', event);
+    Validate(message, 'message', event, 5);
+    Validate(checked,'checkbox', event);
   });
+
+  function enableFastFeedback(formElement) {
+    const nameInput = formElement.find('#name');
+    const passwordInput = formElement.find('#password');
+    const messageInput = formElement.find('#message');
+    const checkboxInput = formElement.find('#checkbox');
+
+    nameInput.blur(function() {
+      const name = $('#name').val();
+      Validate(name, 'name');
+    });
+
+    passwordInput.blur(function () {
+      const password = $('#password').val();
+      Validate(password, 'password');
+    });
+
+    messageInput.blur(function () {
+      const message = $('#message').val();
+      Validate(message, 'message', null, 5);
+    });
+
+    checkboxInput.blur(function () {
+      const checked = $('#checkbox').is(':checked');
+      Validate(checked, 'checkbox');
+    });
+  }
+
+  function Validate(val, type, event, limit = 3) {
+    if (type === 'name' || type === 'password' || type === 'message') {
+      if (val.length >= limit) {
+        $(`#${type}-feedback`).text('')
+      } else {
+        $(`#${type}-feedback`).text(`${type} needs at least ${limit} characters`);
+        if (event) event.preventDefault();
+      }
+    } else if (type === 'checkbox') {
+      if (val === true) {
+        $(`#${type}-feedback`).text('')
+      } else {
+        $(`#${type}-feedback`).text(`${type} must be ticked`);
+        if (event) event.preventDefault();
+      }
+    }
+  }
+
+  /*------AJAX-------*/
+
+  // $('#code').load("js/script.js"); //Loads content from a file on own server.
+
+  // $('#code').load("js/script.js", function(response, statusCode) {
+  //   if (statusCode == "error") {
+  //     alert("could not find file");
+  //   }
+  //   console.log(response);
+  // })
+
+  // const flickerApiUrl = 'https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?';
+
+  // $.getJSON(flickerApiUrl, {
+  //   tags: "sun, beach",
+  //   tagmode: "any",
+  //   format: "json"
+  // }).done(function(data) {
+  //   //Success
+  //   $.each(data.items, (index, element) => {
+  //     $("<img>").attr("src", element.media.m).appendTo('#flickr');
+  //     if(index == 4) return false;
+  //   });
+  // }).fail(function() {
+  //   //Failure
+  //   alert("AJAX Call Failed")
+  // });
+
+  const pokeAPI = 'https://pokeapi.co/api/v2/generation/1';
+  const pokemonByNameAPI = 'https://pokeapi.co/api/v2/pokemon/';
+
+  $.getJSON(pokeAPI)
+  .done(data => {
+    $.each(data.pokemon_species, (i, element) => {
+      const name = `${element.name.charAt(0).toUpperCase()}${element.name.slice(1)}`;
+      const link = $("<a>").attr("id", element.name).attr("href", "#").append($("<strong>").text(name));
+      const par = $("<p>").text(`${i+1}: `).append(link);
+      par.appendTo('#pokemon');
+
+      link.click(event => {
+        event.preventDefault();
+        $.getJSON(`${pokemonByNameAPI}${element.name}`)
+        .done( details => {
+          const pokemonDiv = $('#pokemon-details');
+          pokemonDiv.empty();
+          pokemonDiv.append(`<h2> ${name} </h2>`);
+          pokemonDiv.append(`<img src="${details.sprites.front_default}" alt="${element.name}"></img>`);
+        })
+      });
+    })
+  })
+  .fail(() => alert("AJAX Call Failed"))
+  .always(() => console.log("This is always executed"));
+
 });
